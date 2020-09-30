@@ -8,7 +8,7 @@
 function res=J(theta,X,Y)
   order=length(theta)-1;
   ## First compute the residuals for all sets of theta
-  R=(X*theta'-Y*ones(1,rows(theta)));
+  R=(evalhyp(X, theta)-Y);
   ## Now square and sum the residuals for each set of theta
   res=0.5*sum(R.*R,1)';
 endfunction;
@@ -16,17 +16,14 @@ endfunction;
 # Gradient of J.
 function res=gradJ(theta,X,Y)
   order = columns(theta)-1;
-
-  ## ################################################################
-  ## Your code in here!!!
-
-  res = rand(size(theta));
+  XXo=bsxfun(@power,X,0:length(theta)-1);
+  res=XXo'*(XXo*theta-Y);
 endfunction;
 
 % Evaluate the hypothesis with all x given
 function y=evalhyp(x,theta)
-  XX=bsxfun(@power,x,0:length(theta)-1);
-  y=XX*theta;
+  XXo=bsxfun(@power,x,0:length(theta)-1);
+  y=XXo*theta;
 endfunction;
 
 # Data stored each sample in a row, where the last row is the label
@@ -35,18 +32,11 @@ D=load("escazu40.dat");
 # Extract the areas and the prices
 Xo=D(:,1);
 Yo=D(:,4);
-
-## ################################################################
-## Your code in here!!!
-##
-## Next lines are just an example.  You should change them
-
-t0 = [0 1 0.2]; ## Starting point
+t0 = [0; 1; 0.2]; ## Starting point
 maxiter=2000;
 maxerror=20;
 minibatch=10; %%0.5*rows(Xo);
 method="batch"; ## Method under evaluation
-
 
 [thetas,errors]=descentpoly(@J,@gradJ,t0,Xo,Yo,0.005,
                             "method",method,
