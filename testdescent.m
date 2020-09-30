@@ -7,11 +7,10 @@
 # Objective function of the parameters theta
 function res=J(theta,X,Y)
   order=length(theta)-1;
-
-  ## ################################################################
-  ## Your code in here!!!
-
-  res = zeros(length(theta),1); ## Dummy result
+  ## First compute the residuals for all sets of theta
+  R=(X*theta'-Y*ones(1,rows(theta)));
+  ## Now square and sum the residuals for each set of theta
+  res=0.5*sum(R.*R,1)';
 endfunction;
 
 # Gradient of J.
