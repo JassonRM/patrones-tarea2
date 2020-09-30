@@ -10,7 +10,7 @@ function res=J(theta,X,Y)
 
   ## ################################################################
   ## Your code in here!!!
-  
+
   res = zeros(length(theta),1); ## Dummy result
 endfunction;
 
@@ -20,10 +20,15 @@ function res=gradJ(theta,X,Y)
 
   ## ################################################################
   ## Your code in here!!!
-  
+
   res = rand(size(theta));
 endfunction;
 
+% Evaluate the hypothesis with all x given
+function y=evalhyp(x,theta)
+  XX=bsxfun(@power,x,0:length(theta)-1);
+  y=XX*theta;
+endfunction;
 
 # Data stored each sample in a row, where the last row is the label
 D=load("escazu40.dat");
@@ -48,4 +53,3 @@ method="batch"; ## Method under evaluation
                             "method",method,
                             "maxiter",maxiter,
                             "minibatch",minibatch);
-
