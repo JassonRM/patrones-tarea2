@@ -132,7 +132,41 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
   Y = ny.fit_transform(Yo);
 
   if(method == "batch")
-    [thetas, errors] = batch_grad_descent(tf, gtf, theta0, X, Y, lr, maxiter, epsilon)
+    [thetas, errors] = batch_grad_descent(tf, gtf, theta0, X, Y, lr, maxiter, epsilon);
   endif;
+
+  % Plot theta trayectory for a quadratic approximation
+  scatter3(thetas(:,1), thetas(:,2), thetas(:,3));
+
+  % Plot the hypothesis function evolution during optimization
+  ## Limits for plot of regressed lines
+  minArea = min(Xo);
+  maxArea = max(Xo);
+  minPrice = min(Yo);
+  maxPrice = max(Yo);
+
+  areas=linspace(minArea,maxArea,15); ## Some areas in the whole range
+  % nareas=nx.transform([ones(length(areas),1) areas']) ## Normalized desired areas
+
+  ## We have to de-normalize the normalized estimation
+  % nprices = nareas * thetas(1,:)';
+  % prices=ny.itransform(nprices);
+
+  ## Plot initial hypothesis
+  plot(areas, polyval(thetas(1,:), areas), "linewidth", 3);
+  hold on;
+
+  ## Plot training data
+  % plot(areas,prices,'k',"linewidth",2);
+
+  ## and now the intermediate versions
+  for (i=[2:rows(thetas)])
+    % nprices = nareas * ts(i,:)';
+    % prices=ny.itransform(nprices);
+    % plot(areas,prices,'r',"linewidth",1);
+    plot(areas, polyval(thetas(i,:), areas),'r',"linewidth",1);
+  endfor;
+  ## Repaint the last one as green
+  plot(areas, polyval(thetas(end,:), areas), 'g', "linewidth", 3);
 
 endfunction

@@ -7,7 +7,7 @@
 % Xo: vector holding the original data (e.g. the house areas)
 % Yo: vector holding the original outputs (e.g. the house prices)
 % lr: learning rate
-function [thetas, errors] = batch_grad_descent(J, gradJ,theta0,X,Y,lr, maxIter, epsilon)
+function [thetas, errors] = batch_grad_descent(J, gradJ, theta0, X, Y, lr, maxIter, epsilon)
   ## Perform the gradient descent
   thetas = theta0; # sequence of thetas
   errors = J(theta0, X, Y);

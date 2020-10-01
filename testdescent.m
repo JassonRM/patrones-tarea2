@@ -42,5 +42,3 @@ method="batch"; ## Method under evaluation
                             "method",method,
                             "maxiter",maxiter,
                             "minibatch",minibatch);
-
-% plot everything
