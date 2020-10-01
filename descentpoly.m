@@ -155,13 +155,14 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
   nprices = evalhyp(nareas, thetas(1,:));
   prices=ny.itransform(nprices);
 
-  ## Plot initial hypothesis
-  figure(2);
-  plot(areas, prices, "linewidth", 3);
-  hold on;
 
   ## Plot training data
-  plot(Xo,Yo,".b","markersize", 30);
+  figure(2);
+  plot(Xo,Yo,".b","markersize", 20);
+  hold on;
+
+  ## Plot initial hypothesis
+  plot(areas, prices, "linewidth", 3);
 
   ## and now the intermediate versions
   for (i=[2:rows(thetas)])
