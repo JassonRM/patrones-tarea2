@@ -17,7 +17,7 @@ endfunction;
 function res=gradJ(theta,X,Y)
   order = columns(theta)-1;
   XXo=bsxfun(@power,X,0:length(theta)-1);
-  res=XXo'*(XXo*theta'-Y);
+  res=(XXo'*(XXo*theta'-Y))';
 endfunction;
 
 % Evaluate the hypothesis with all x given
@@ -33,7 +33,7 @@ D=load("escazu40.dat");
 Xo=D(:,1);
 Yo=D(:,4);
 t0 = [0 1 0.2]; ## Starting point
-maxiter=20%2000;
+maxiter=2000;
 maxerror=20;
 minibatch=10; %%0.5*rows(Xo);
 method="batch"; ## Method under evaluation

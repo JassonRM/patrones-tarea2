@@ -66,7 +66,7 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
   else
     error("theta0 must be a row vector");
   endif
-    
+
   ## Xo must be a column vector
   if (isvector(Xo))
     Xo=Xo(:);
@@ -80,7 +80,7 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
   else
     error("Yo must be a column vector");
   endif
-  
+
   defaultMethod="batch";
   defaultBeta=0.7;
   defaultBeta2=0.99;
@@ -101,9 +101,9 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
   addParameter(p,'maxiter',defaultMaxIter,checkRealPosScalar);
   addParameter(p,'epsilon',defaultEps,checkRealPosScalar);
   addParameter(p,'minibatch',defaultMinibatch,checkRealPosScalar);
-  
+
   parse(p,varargin{:});
-  
+
   if ~checkBeta(lr)
     error("Learning rate must be between 0 and 1");
   endif
@@ -119,9 +119,20 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
   maxiter = p.Results.maxiter;     ## maxinum number of iterations
   epsilon = p.Results.epsilon;     ## convergence error tolerance
   minibatch = p.Results.minibatch; ## minibatch size
-  
-  thetas = [theta0];
-  errors = [tf(theta0,Xo,Yo)];
-  
-endfunction
 
+  ## normalizer_type="normal";
+  normalizer_type="minmax";
+
+  ## Normalize the data
+  nx = normalizer(normalizer_type);
+  X = nx.fit_transform(Xo);
+
+  ## The outputs vector with the original data
+  ny = normalizer(normalizer_type);
+  Y = ny.fit_transform(Yo);
+
+  if(method == "batch")
+    [thetas, errors] = batch_grad_descent(tf, gtf, theta0, X, Y, lr, maxiter, epsilon)
+  endif;
+
+endfunction
