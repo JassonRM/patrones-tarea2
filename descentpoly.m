@@ -157,7 +157,7 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
 
   ## Plot initial hypothesis
   figure(2);
-  plot(areas, polyval(thetas(1,:), areas), "linewidth", 3);
+  plot(areas, prices, "linewidth", 3);
   hold on;
 
   ## Plot training data
@@ -168,9 +168,8 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
     nprices = evalhyp(nareas, thetas(i,:));
     prices=ny.itransform(nprices);
     plot(areas,prices,'r',"linewidth",1);
-    plot(areas, polyval(thetas(i,:), areas),'r',"linewidth",1);
   endfor;
   ## Repaint the last one as green
-  plot(areas, polyval(thetas(end,:), areas), 'g', "linewidth", 3);
+  plot(areas, prices, 'g', "linewidth", 3);
 
 endfunction
