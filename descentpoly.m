@@ -131,10 +131,12 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
   ny = normalizer(normalizer_type);
   Y = ny.fit_transform(Yo);
 
-  if(method == "batch")
+  if(strcmp(method, "batch"))
     [thetas, errors] = batch_grad_descent(tf, gtf, theta0, X, Y, lr, maxiter, epsilon);
-elseif(method == "stoch")
+elseif(strcmp(method, "stoch"))
 	[thetas, errors] = stoch_grad_descent(tf, gtf, theta0, X, Y, lr, maxiter, epsilon);
+elseif(strcmp(method, "rmsprop"))
+	[thetas, errors] = rmsprop(tf, gtf, theta0, X, Y, lr, maxiter, epsilon, beta2);
   endif;
 
   % Plot theta trayectory for a quadratic approximation
