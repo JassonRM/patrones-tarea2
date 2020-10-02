@@ -2,8 +2,8 @@
 %
 % The following parameters are required:
 %
-% tf: target function computing the loss (or error)
-% gtf: gradient of target function
+% J: target function computing the loss (or error)
+% gradJ: gradient of target function
 % theta0: initial point for the iteration
 % Xo: vector holding the original data (e.g. the house areas)
 % Yo: vector holding the original outputs (e.g. the house prices)
