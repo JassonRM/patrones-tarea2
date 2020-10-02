@@ -133,6 +133,8 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
 
   if(method == "batch")
     [thetas, errors] = batch_grad_descent(tf, gtf, theta0, X, Y, lr, maxiter, epsilon);
+elseif(method == "stoch")
+	[thetas, errors] = stoch_grad_descent(tf, gtf, theta0, X, Y, lr, maxiter, epsilon);
   endif;
 
   % Plot theta trayectory for a quadratic approximation

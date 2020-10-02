@@ -1,4 +1,5 @@
 % Code taken from Pablo Alvarado's batch_grad_descent.m lines 155 to 165
+%
 % The following parameters are required:
 %
 % tf: target function computing the loss (or error)
