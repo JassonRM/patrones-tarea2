@@ -4,9 +4,12 @@ function multiple_orders(tf,gtf,Xo,Yo,lr,varargin)
   t5 = [0 0 0 0 0 0];
   t7 = [0 0 0 0 0 0 0 0];
 
-  figure(2);
-  plot(Xo,Yo,".b","markersize", 20);
+  Legends = cell(5,1);
+
+  figure("name", "Figuras según orden de polinomio");
+  plot(Xo,Yo,".k","linewidth", 1, "markersize", 15, "marker",'o', 'markerfacecolor', [247 176 91]/255,'markeredgecolor', 'k');
   hold on;
+  Legends{1} ="data";
 
   minArea = min(Xo);
   maxArea = max(Xo);
@@ -29,22 +32,33 @@ function multiple_orders(tf,gtf,Xo,Yo,lr,varargin)
   areas=linspace(minArea,maxArea,150); ## Some areas in the whole range
   nareas=nx.transform(areas'); ## Normalized desired areas
 
+
   [thetas,errors]=descentpoly(tf,gtf,t1,Xo,Yo,lr,varargin{:});
   nprices = evalhyp(nareas, thetas(end,:));
   prices=ny.itransform(nprices);
-  plot(areas,prices,'r',"linewidth",3);
+  plot(areas,prices,'k',"linewidth",3, "color", [108, 117, 125]/255);
+  Legends{2} ="n=1";
+
   [thetas,errors]=descentpoly(tf,gtf,t3,Xo,Yo,lr,varargin{:});
   nprices = evalhyp(nareas, thetas(end,:));
   prices=ny.itransform(nprices);
-  plot(areas,prices,'r',"linewidth",3);
+  plot(areas,prices,'k',"linewidth",3,"color", [33, 37, 41]/255);
+  Legends{3} ="n=3";
+
   [thetas,errors]=descentpoly(tf,gtf,t5,Xo,Yo,lr,varargin{:});
   nprices = evalhyp(nareas, thetas(end,:));
   prices=ny.itransform(nprices);
-  plot(areas,prices,'r',"linewidth",3);
+  plot(areas,prices,'k',"linewidth",3,"color", [73, 80, 87]/255);
+  Legends{4} ="n=5";
+
   [thetas,errors]=descentpoly(tf,gtf,t7,Xo,Yo,lr,varargin{:});
   nprices = evalhyp(nareas, thetas(end,:));
   prices=ny.itransform(nprices);
-  plot(areas,prices,'r',"linewidth",3);
+  plot(areas,prices,'k',"linewidth",3,"color", [52, 58, 64]/255);
+  Legends{5} ="n=7";
+
+  legend(Legends);
+
   hold off;
 
 endfunction
