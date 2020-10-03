@@ -1,4 +1,4 @@
-function multiple_orders(tf,gtf,Xo,Yo,lr,varargin)
+function multiple_orders(tf,gtf,Xo,Yo,lr,name,varargin)
   t1 = [0 0];
   t3 = [0 0 0 0];
   t5 = [0 0 0 0 0 0];
@@ -6,7 +6,7 @@ function multiple_orders(tf,gtf,Xo,Yo,lr,varargin)
 
   Legends = cell(5,1);
 
-  figure("name", "Figuras según orden de polinomio");
+  figure("name", cstrcat("Multi-order polinomial - ",name));
   plot(Xo,Yo,".k","linewidth", 1, "markersize", 15, "marker",'o', 'markerfacecolor', [247 176 91]/255,'markeredgecolor', 'k');
   hold on;
   Legends{1} ="data";

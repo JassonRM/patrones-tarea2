@@ -82,7 +82,7 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
   endif
 
   defaultMethod="batch";
-  defaultBeta=0.7;
+  defaultBeta=0.9;
   defaultBeta2=0.99;
   defaultMaxIter=200;
   defaultEps=0.001;
@@ -133,48 +133,14 @@ function [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr,varargin)
 
   if(strcmp(method, "batch"))
     [thetas, errors] = batch_grad_descent(tf, gtf, theta0, X, Y, lr, maxiter, epsilon);
-elseif(strcmp(method, "stochastic"))
-	[thetas, errors] = stoch_grad_descent(tf, gtf, theta0, X, Y, lr, maxiter, epsilon, minibatch);
-elseif(strcmp(method, "rmsprop"))
-	[thetas, errors] = rmsprop(tf, gtf, theta0, X, Y, lr, maxiter, epsilon, minibatch, beta2);
-  endif;
-
-  % Plot theta trayectory for a quadratic approximation
-  if(columns(thetas)==3)
-    figure(1, "name", "Theta trayectory for a quadratic approximation");
-    scatter3(thetas(:,1), thetas(:,2), thetas(:,3));
-  endif;
-
-  % Plot the hypothesis function evolution during optimization
-  ## Limits for plot of regressed lines
-  minArea = min(Xo);
-  maxArea = max(Xo);
-  minPrice = min(Yo);
-  maxPrice = max(Yo);
-
-  areas=linspace(minArea,maxArea,15); ## Some areas in the whole range
-  nareas=nx.transform(areas'); ## Normalized desired areas
-
-  ## We have to de-normalize the normalized estimation
-  nprices = evalhyp(nareas, thetas(1,:));
-  prices=ny.itransform(nprices);
-
-
-  ## Plot training data
-  figure(2);
-  plot(Xo,Yo,".b","markersize", 20);
-  hold on;
-
-  ## Plot initial hypothesis
-  plot(areas, prices, "linewidth", 3);
-
-  ## and now the intermediate versions
-  for (i=[2:rows(thetas)])
-    nprices = evalhyp(nareas, thetas(i,:));
-    prices=ny.itransform(nprices);
-    plot(areas,prices,'r',"linewidth",1);
-  endfor;
-  ## Repaint the last one as green
-  plot(areas, prices, 'g', "linewidth", 3);
+  elseif(strcmp(method, "stochastic"))
+  	[thetas, errors] = stoch_grad_descent(tf, gtf, theta0, X, Y, lr, maxiter, epsilon, minibatch);
+  elseif(strcmp(method, "rmsprop"))
+  	[thetas, errors] = rmsprop(tf, gtf, theta0, X, Y, lr, maxiter, epsilon, minibatch, beta2);
+  elseif(strcmp(method, "momentum"))
+    [thetas, errors] = momentum(tf, gtf, theta0, X, Y, lr, maxiter, minibatch, beta, epsilon);
+  elseif(strcmp(method, "adam"))
+    [thetas, errors] = adam(tf, gtf, theta0, X, Y, lr, maxiter, minibatch, beta, beta2, 1e-8, epsilon);
+    endif;
 
 endfunction

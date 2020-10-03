@@ -1,8 +1,8 @@
 
-function multiple_alpha(tf,gtf,theta0,Xo,Yo,y_lim,varargin)
-  lr = [0.001 0.005 0.01 0.045 0.0494 0.002];
-  colors = ['k' 'r' 'g' 'b' 'm', 'y'];
-  figure(3, "name", "Error evolution");
+function multiple_alpha(tf,gtf,theta0,Xo,Yo,y_lim,name,varargin)
+  lr = [0.001 0.005 0.01 0.045 0.0494];
+  colors = ['k' 'r' 'g' 'b' 'm'];
+  figure("name", cstrcat("Error evolution - ",name));
   [thetas,errors]=descentpoly(tf,gtf,theta0,Xo,Yo,lr(1),varargin{:});
   plot(errors, colors(1), "linewidth", 2);
 

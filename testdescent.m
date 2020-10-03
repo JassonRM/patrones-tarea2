@@ -32,13 +32,38 @@ D=load("escazu40.dat");
 # Extract the areas and the prices
 Xo=D(:,1);
 Yo=D(:,4);
-t0 = [0 1 0.2]; ## Starting point
+t0 = [5 0.2 0]; ## Starting point
 maxiter=2000;
 maxerror=20;
 minibatch=10; %%0.5*rows(Xo);
-method="batch"; ## Method under evaluation
+Methods={'batch' 'stochastic' 'momentum' 'rmsprop' 'adam'}; ## Method under evaluation
+Ylimits=[20 1 1 1 1];
 
-[thetas,errors]=descentpoly(@J,@gradJ,t0,Xo,Yo,0.005,
-                            "method",method,
-                            "maxiter",maxiter,
-                            "minibatch",minibatch);
+i=1;
+for method=Methods
+
+  cuadratic(@J,@gradJ,t0, Xo,Yo,0.005,method{1},
+                              "method",method{1},
+                              "maxiter",maxiter,
+                              "minibatch",minibatch,
+                              "epsilon", 0.001);
+
+  hypothesis_evolution(@J,@gradJ,t0, Xo,Yo,0.005,method{1},
+                              "method",method{1},
+                              "maxiter",maxiter,
+                              "minibatch",minibatch,
+                              "epsilon", 0.001);
+
+  multiple_alpha(@J,@gradJ,t0,Xo,Yo,Ylimits(i),method{1},
+                              "method",method{1},
+                              "maxiter",maxiter,
+                              "minibatch",minibatch,
+                              "epsilon", 0.001);
+
+  multiple_orders(@J,@gradJ,Xo,Yo,0.001,method{1},
+                              "method",method{1},
+                              "maxiter",maxiter,
+                              "minibatch",minibatch,
+                              "epsilon", 0.001);
+  i++;
+endfor
