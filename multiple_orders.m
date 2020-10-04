@@ -1,8 +1,8 @@
 function multiple_orders(tf,gtf,Xo,Yo,lr,name,varargin)
-  t1 = [0 0];
-  t3 = [0 0 0 0];
-  t5 = [0 0 0 0 0 0];
-  t7 = [0 0 0 0 0 0 0 0];
+  t1 = [1 1];
+  t3 = [1 1 1 1];
+  t5 = [1 1 1 1 1 1];
+  t7 = [1 1 1 1 1 1 1 1];
 
   Legends = cell(5,1);
 

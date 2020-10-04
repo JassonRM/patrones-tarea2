@@ -12,11 +12,13 @@
 % MB: size of mini-batch
 % beta: momentum constant
 % beta2: rmsprop constant
-% rmspepsilon: rmsprop constant to avoid division by zero
 % epsilon: error tolerance
 
-function [thetas, errors] = adam(J, gradJ, theta0, X, Y, lr, maxIter, MB, beta, beta2, rmspepsilon, epsilon)
+function [thetas, errors] = adam(J, gradJ, theta0, X, Y, lr, maxIter, MB, beta, beta2, epsilon)
   pkg load optim;
+
+  ## Avoid division by zero
+	rmspepsilon=1e-8;
 
   thetas = theta0; # sequence of thetas
 	errors = J(theta0, X, Y);
