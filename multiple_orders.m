@@ -8,6 +8,8 @@ function multiple_orders(tf,gtf,Xo,Yo,lr,name,varargin)
 
   figure("name", cstrcat("Multi-order polinomial - ",name));
   plot(Xo,Yo,".k","linewidth", 1, "markersize", 15, "marker",'o', 'markerfacecolor', [247 176 91]/255,'markeredgecolor', 'k');
+  xlabel("area");
+  ylabel("precio");
   hold on;
   Legends{1} ="data";
 

@@ -29,6 +29,8 @@ function hypothesis_evolution(tf,gtf,theta0,Xo,Yo,lr,name,varargin)
 
   ## Plot training data
   figure("name", cstrcat("hypothesis evolution - ", name));
+  xlabel("area");
+  ylabel("precio");
   hold on;
 
   ## Plot initial hypothesis
